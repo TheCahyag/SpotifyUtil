@@ -95,7 +95,7 @@ public class SpotifyUtilGUI extends Application {
         List<PlaylistSimplified> playlists = SpotifyRequest.getUserPlaylists(SpotifyUtilMain.thecahyagId);
         playlists.forEach(playlistSimplified -> {
             Text playlist = new Text(playlistSimplified.getName());
-            sideMenuItems.add(makeClickable(playlist, event ->  {
+            sideMenuItems.add(GuiUtil.makeClickable(playlist, this.scene, event -> {
                 Playlist playlist1 = SpotifyRequest.getPlaylist(playlistSimplified.getId());
                 List<Track> trackSimplifieds = new ArrayList<>();
                 Arrays.stream(playlist1.getTracks().getItems()).forEach(playlistTrack -> trackSimplifieds.add(playlistTrack.getTrack()));
@@ -117,12 +117,7 @@ public class SpotifyUtilGUI extends Application {
         return new ScrollPane(new TracksPane(tracks));
     }
 
-    public Node makeClickable(Node node, EventHandler<? super MouseEvent> action){
-        node.setOnMouseClicked(action);
-        node.setOnMouseEntered(event -> scene.setCursor(Cursor.HAND));
-        node.setOnMouseExited(event -> scene.setCursor(Cursor.DEFAULT));
-        return node;
-    }
+
 
     public static void main(String[] args) {
         launch(args);
