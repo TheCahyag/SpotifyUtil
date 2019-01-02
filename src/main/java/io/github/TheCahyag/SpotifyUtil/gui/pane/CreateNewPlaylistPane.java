@@ -1,6 +1,7 @@
 package io.github.TheCahyag.SpotifyUtil.gui.pane;
 
 import io.github.TheCahyag.SpotifyUtil.SpotifyUtilMain;
+import io.github.TheCahyag.SpotifyUtil.gui.dialog.InfoDialog;
 import io.github.TheCahyag.SpotifyUtil.spotify.SpotifyRequest;
 import io.github.TheCahyag.SpotifyUtil.util.StringUtil;
 import javafx.scene.control.Button;
@@ -22,8 +23,8 @@ public class CreateNewPlaylistPane extends BorderPane {
     private Button createPlaylistButton, clearFormElementsButton;
     private Label playlistNameLabel, playlistDescriptionLabel;
     private TextField playlistNameTextField, playlistDescriptionTextField;
-    private HBox form;
-    private VBox actions;
+    private VBox form;
+    private HBox actions;
 
     private final String createPlaylistButtonText = "Create Playlist";
     private final String clearFormElementsButtonText = "Clear";
@@ -50,13 +51,15 @@ public class CreateNewPlaylistPane extends BorderPane {
         // TextFields
         this.playlistNameTextField = new TextField();
         this.playlistDescriptionTextField = new TextField();
+        this.playlistNameTextField.setMaxWidth(150);
+        this.playlistDescriptionTextField.setMaxWidth(150);
 
         // VBox
-        this.actions = new VBox(5);
+        this.actions = new HBox(5);
         this.actions.getChildren().addAll(this.createPlaylistButton, this.clearFormElementsButton);
 
         // HBox
-        this.form = new HBox(5);
+        this.form = new VBox(5);
         this.form.getChildren().addAll(
                 this.playlistNameLabel,
                 this.playlistNameTextField,
@@ -89,6 +92,8 @@ public class CreateNewPlaylistPane extends BorderPane {
                         this.playlistNameTextField.getText(),
                         this.playlistDescriptionTextField.getText()
                 );
+            } else {
+                new InfoDialog("Fill out the forms first.jfkldsajfldjsalkfjdaslkfjdsalfjdsalfjadsljf;sdaljflksajfklasjf;lkasdjflkjaslkfjaslkfjaslfjaslkfsadfasfasfasdfasdfasf");
             }
         });
 
