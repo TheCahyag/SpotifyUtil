@@ -15,6 +15,7 @@ public abstract class AbstractViewsPane<T> extends GridPane {
     public AbstractViewsPane(List<T> list){
         this.collection = list;
         this.initData();
+        this.initStyles();
     }
 
     private void initStyles(){
