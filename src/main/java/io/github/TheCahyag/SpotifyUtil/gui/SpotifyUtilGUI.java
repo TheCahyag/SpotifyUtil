@@ -6,6 +6,7 @@ import com.wrapper.spotify.model_objects.specification.Track;
 import com.wrapper.spotify.model_objects.specification.TrackSimplified;
 import io.github.TheCahyag.SpotifyUtil.SpotifyUtilMain;
 import io.github.TheCahyag.SpotifyUtil.data.PreparedStatements;
+import io.github.TheCahyag.SpotifyUtil.gui.pane.CreateNewPlaylistPane;
 import io.github.TheCahyag.SpotifyUtil.spotify.Connector;
 import io.github.TheCahyag.SpotifyUtil.spotify.SpotifyRequest;
 import io.github.TheCahyag.SpotifyUtil.gui.pane.TracksPane;
@@ -43,6 +44,9 @@ public class SpotifyUtilGUI extends Application {
     private BorderPane mainPane;
     private VBox sideMenu;
 
+    private CreateNewPlaylistPane createNewPlaylistPane;
+
+
     @Override
     public void init() throws Exception {
         super.init();
@@ -53,19 +57,19 @@ public class SpotifyUtilGUI extends Application {
         // Frontend pane init
         this.mainPane = new BorderPane();
         this.sideMenu = new VBox(10);
+
+        this.createNewPlaylistPane = new CreateNewPlaylistPane();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(this.getSideMenuItems());
-        this.mainPane.setLeft(new ScrollPane(vBox));
+
 
         StackPane root = new StackPane();
         root.getChildren().add(mainPane);
+        this.scene = new Scene(root, APP_WIDTH, APP_HEIGHT);
 
-        mainPane.setCenter(makeGridFromTracks(PreparedStatements.getAllTracks()));
 
         Button btn = new Button("Play Brandy");
         btn.setOnAction(event ->
@@ -73,11 +77,15 @@ public class SpotifyUtilGUI extends Application {
                         System.out.println(SpotifyRequest.getMe())
         );
 
+        VBox vBox = new VBox(10);
+        vBox.getChildren().addAll(this.getSideMenuItems());
 
+        this.mainPane.setLeft(new ScrollPane(vBox));
+        mainPane.setCenter(makeGridFromTracks(PreparedStatements.getAllTracks()));
         mainPane.setBottom(btn);
 
 
-        this.scene = new Scene(root, APP_WIDTH, APP_HEIGHT);
+
         primaryStage.setTitle(APP_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -103,9 +111,10 @@ public class SpotifyUtilGUI extends Application {
             }));
         });
 
-
+        sideMenuItems.add(GuiUtil.makeClickable(new Text("Create Playlist"), this.scene, event -> this.mainPane.setCenter(this.createNewPlaylistPane)));
 
         sideMenuItems.add(albums);
+
         return sideMenuItems;
     }
 
